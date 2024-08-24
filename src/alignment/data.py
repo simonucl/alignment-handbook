@@ -96,7 +96,7 @@ def apply_chat_template(
 
             example["text_prompt"] = tokenizer.apply_chat_template(prompt_messages, tokenize=False)
             if isinstance(tokenizer, CohereTokenizerFast):
-                example["text_chosen"] = '<|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|>'  + example['chosen'][-1]['content'].strip() + '<|END_OF_TURN_TOKEN|>'
+                example["text_chosen"] = '<|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|>' + example['chosen'][-1]['content'].strip() + '<|END_OF_TURN_TOKEN|>'
                 example["text_rejected"] = '<|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|>' + example['rejected'][-1]['content'].strip() + '<|END_OF_TURN_TOKEN|>'
             else:
                 example["text_chosen"] = tokenizer.apply_chat_template(chosen_messages, tokenize=False)
