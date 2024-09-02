@@ -18,7 +18,7 @@ from typing import Any, List, Literal, Optional
 
 from datasets import DatasetDict, concatenate_datasets, load_dataset, load_from_disk
 from datasets.builder import DatasetGenerationError
-from transformers import CohereTokenizerFast
+from transformers import CohereTokenizerFast, GemmaTokenizer, GemmaTokenizerFast
 
 from .configs import DataArguments
 
@@ -91,13 +91,17 @@ def apply_chat_template(
                 rejected_messages = example["rejected"][-1:]
 
             # Prepend a system message if the first message is not a system message
-            if auto_insert_empty_system_msg:
+            if auto_insert_empty_system_msg and not isinstance(tokenizer, (GemmaTokenizerFast, GemmaTokenizer)):
                 maybe_insert_system_message(prompt_messages, tokenizer)
 
             example["text_prompt"] = tokenizer.apply_chat_template(prompt_messages, tokenize=False)
             if isinstance(tokenizer, CohereTokenizerFast):
                 example["text_chosen"] = '<|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|>' + example['chosen'][-1]['content'].strip() + '<|END_OF_TURN_TOKEN|>'
                 example["text_rejected"] = '<|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|>' + example['rejected'][-1]['content'].strip() + '<|END_OF_TURN_TOKEN|>'
+            elif isinstance(tokenizer, (GemmaTokenizerFast, GemmaTokenizer)):
+                role = 'model'
+                example["text_chosen"] = '<start_of_turn>model\n' + chosen_messages[-1]['content'].strip() + '<end_of_turn>\n'
+                example["text_rejected"] = '<start_of_turn>model\n' + rejected_messages[-1]['content'].strip() + '<end_of_turn>\n'
             else:
                 example["text_chosen"] = tokenizer.apply_chat_template(chosen_messages, tokenize=False)
                 example["text_rejected"] = tokenizer.apply_chat_template(rejected_messages, tokenize=False)
