@@ -26,8 +26,8 @@ learning_rate: 5.0e-7
 log_level: info
 logging_steps: 5
 lr_scheduler_type: cosine
-max_length: 3072
-max_prompt_length: 1024
+max_length: 4096
+max_prompt_length: 2048
 num_train_epochs: 1
 optim: adamw_torch
 output_dir: outputs/llama-3-8b-instruct-armorm-judge

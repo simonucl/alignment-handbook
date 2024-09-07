@@ -1,0 +1,1 @@
+DS_SKIP_CUDA_CHECK=1 ACCELERATE_LOG_LEVEL=info nohup accelerate launch --config_file recipes/accelerate_configs/deepspeed_zero3_8card.yaml scripts/run_dpo.py recipes/llama-3-8b-instruct-agg-judge.yaml > logs/dpo.txt 2>&1 &
