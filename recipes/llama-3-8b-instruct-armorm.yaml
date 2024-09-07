@@ -5,7 +5,7 @@ attn_implementation: flash_attention_2
 
 # Data training arguments
 dataset_mixer:
-  princeton-nlp/llama3-ultrafeedback-armorm: 1.0
+  simonycl/Llama-3-8B-Instruct-ultrafeedback-armorm-annotate: 1.0
 dataset_splits:
 - train
 - test
@@ -26,8 +26,8 @@ learning_rate: 5.0e-7
 log_level: info
 logging_steps: 5
 lr_scheduler_type: cosine
-max_length: 2048
-max_prompt_length: 1800
+max_length: 3072
+max_prompt_length: 1024
 num_train_epochs: 1
 optim: adamw_torch
 output_dir: outputs/llama-3-8b-instruct-armorm-judge
