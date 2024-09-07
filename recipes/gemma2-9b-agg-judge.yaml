@@ -5,7 +5,7 @@ attn_implementation: flash_attention_2
 
 # Data training arguments
 dataset_mixer:
-  simonycl/gemma2-9B-it-ultrafeedback-armorm-judge: 1.0
+  simonycl/gemma2-9B-it-ultrafeedback-judge-5: 1.0
 dataset_splits:
 - train
 - test
