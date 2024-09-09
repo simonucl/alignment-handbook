@@ -5,7 +5,7 @@ attn_implementation: flash_attention_2
 
 # Data training arguments
 dataset_mixer:
-  simonycl/Llama-3-8B-Instruct-ultrafeedback-judge-5-annotate: 1.0
+  simonycl/Meta-Llama-3-8B-Instruct_metamath-Meta-Llama-3-8B-Instruct-annotate-judge-5: 1.0
 dataset_splits:
 - train
 - test
@@ -17,11 +17,11 @@ beta: 0.01
 do_eval: true
 eval_strategy: steps
 eval_steps: 400
-gradient_accumulation_steps: 16
+gradient_accumulation_steps: 32
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: False
-hub_model_id: dpo-agg-judge
+hub_model_id: dpo-metamath-agg-judge
 learning_rate: 5.0e-7
 log_level: info
 logging_steps: 5
@@ -30,10 +30,10 @@ max_length: 4096
 max_prompt_length: 2048
 num_train_epochs: 1
 optim: adamw_torch
-output_dir: outputs/llama-3-8b-instruct-agg-judge
-run_name: llama-3-8b-instruct-agg-judge
-per_device_train_batch_size: 2
-per_device_eval_batch_size: 4
+output_dir: outputs/llama-3-8b-instruct-metamath-agg-judge
+run_name: llama-3-8b-instruct-metamath-agg-judge
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 2
 push_to_hub: false
 save_strategy: "steps"
 save_steps: 1000000
