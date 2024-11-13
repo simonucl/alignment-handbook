@@ -22,7 +22,7 @@ from transformers.trainer_utils import get_last_checkpoint
 
 from accelerate import Accelerator
 from huggingface_hub import list_repo_files
-from huggingface_hub.utils._errors import RepositoryNotFoundError
+from huggingface_hub.errors import RepositoryNotFoundError
 from huggingface_hub.utils._validators import HFValidationError
 from peft import LoraConfig, PeftConfig
 
@@ -52,11 +52,11 @@ def get_quantization_config(model_args: ModelArguments) -> BitsAndBytesConfig | 
             bnb_4bit_quant_type=model_args.bnb_4bit_quant_type,
             bnb_4bit_use_double_quant=model_args.use_bnb_nested_quant,
             bnb_4bit_quant_storage=model_args.bnb_4bit_quant_storage,
-        )
+        ).to_dict()
     elif model_args.load_in_8bit:
         quantization_config = BitsAndBytesConfig(
             load_in_8bit=True,
-        )
+        ).to_dict()
     else:
         quantization_config = None
 
@@ -88,7 +88,7 @@ def get_tokenizer(
 
     if data_args.chat_template is not None:
         tokenizer.chat_template = data_args.chat_template
-    elif auto_set_chat_template and tokenizer.chat_template is None and tokenizer.default_chat_template is None:
+    elif auto_set_chat_template and tokenizer.get_chat_template() is None:
         tokenizer.chat_template = DEFAULT_CHAT_TEMPLATE
 
     return tokenizer
